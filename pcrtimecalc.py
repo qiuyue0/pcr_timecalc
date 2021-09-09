@@ -27,8 +27,8 @@ async def feedback(bot, ev: CQEvent):
         dd1=rest
     if d2>=rest:
         dd2=rest        
-    res1=(1-(rest-dd1)/dd2)*90+10; # 1先出，2能得到的时间
-    res2=(1-(rest-dd2)/dd1)*90+10; # 2先出，1能得到的时间
+    res1=(1-(rest-dd1)/dd2)*90+20; # 1先出，2能得到的时间
+    res2=(1-(rest-dd2)/dd1)*90+20; # 2先出，1能得到的时间
     res1=math.ceil(res1)
     res2=math.ceil(res2)
     res1=min(res1,90)
@@ -39,9 +39,9 @@ async def feedback(bot, ev: CQEvent):
     if(d1>=rest or d2>=rest):
         reply=reply+"注：\n"
         if(d1>=rest):
-            reply=reply+"第一刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+10s\n"
+            reply=reply+"第一刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+20s\n"
         if(d2>=rest):
-            reply=reply+"第二刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+10s\n"
+            reply=reply+"第二刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+20s\n"
     d1=str(d1)
     d2=str(d2)
     reply=reply+"刀1先出，另一刀可获得 "+res1+" 秒补偿刀\n"
