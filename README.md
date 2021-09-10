@@ -2,7 +2,9 @@
 
 国服pcr合刀计算插件 for Hoshino。简单修改自https://github.com/bugaosuni59/my_Hoshinobot_plugins/tree/master/合刀
 
+pcrtimecalc.py为原合刀计算器
 
+pcr_timecalc_extension为任意时长补偿刀计算器
 
 尾刀计算使用方法：
 

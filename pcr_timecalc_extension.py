@@ -3,10 +3,10 @@ import math
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
 
-sv = Service('补时', manage_priv=priv.SUPERUSER, help_='请输入：补时 刀1伤害 剩余血量 所需补时\n如：合刀计算 500 600 44\n')
+sv = Service('补时', manage_priv=priv.SUPERUSER, help_='请输入：补时 刀1伤害 剩余血量 所需补时\n如：补时 500 600 44\n')
 
 
-@sv.on_prefix('合刀计算')
+@sv.on_prefix('补时')
 async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()

@@ -3,15 +3,15 @@ import math
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
 
-sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀计算 刀1伤害 刀2伤害 剩余血量\n如：合刀计算 50 60 70\n')
+sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀 刀1伤害 刀2伤害 剩余血量\n如：合刀 50 60 70\n')
 
 
-@sv.on_prefix('合刀计算')
+@sv.on_prefix('合刀')
 async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()
     if(len(content)!=4):
-        reply="请输入：合刀计算 刀1伤害 刀2伤害 剩余血量\n如：合刀计算 50 60 70\n"
+        reply="请输入：合刀 刀1伤害 刀2伤害 剩余血量\n如：合刀 50 60 70\n"
         await bot.send(ev, reply)
         return
     d1=float(content[1])
