@@ -27,8 +27,8 @@ async def feedback(bot, ev: CQEvent):
         dd1=rest
     if d2>=rest:
         dd2=rest        
-    res1=(1-(rest-dd1)/dd2)*90+20; # 1先出，2能得到的时间
-    res2=(1-(rest-dd2)/dd1)*90+20; # 2先出，1能得到的时间
+    res1=109.01-(rest-dd1)/dd2*90; # 1先出，2能得到的时间
+    res2=109.01-(rest-dd2)/dd1*90; # 2先出，1能得到的时间
     res1=math.ceil(res1)
     res2=math.ceil(res2)
     res1=min(res1,90)
