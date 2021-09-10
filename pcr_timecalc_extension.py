@@ -18,10 +18,9 @@ async def feedback(bot, ev: CQEvent):
     rest=float(content[2])
     time=int(content[3])
     dmg1=d1    
-    reply=f"刀1伤害：{d1}\nBoss血量：{rest}\n所需补时：{time}\n"
-    reply=reply+"注：\n"
+    reply=f"刀1伤害：{d1}    Boss血量：{rest}    所需补时：{time}秒\n"
     dmg2 = max(0,math.ceil(1/(109.01-time)*90*(rest-dmg1)))
-    reply+="第一刀先出，第二刀需要造成伤害："+str(dmg2)+"才能使第二刀获得"+str(time)+"s补时\n"
+    reply+="第一刀先出，第二刀需要造成"+str(dmg2)+"伤害才能使第二刀获得"+str(time)+"秒补时\n"
     dmg2 = max(0,math.ceil(rest-(109.01-time)/90*dmg1))
-    reply+="第一刀后出，第二刀需要造成伤害："+str(dmg2)+"才能使第一刀获得"+str(time)+"s补时"
+    reply+="第一刀后出，第二刀需要造成"+str(dmg2)+"伤害才能使第一刀获得"+str(time)+"秒补时"
     await bot.send(ev, reply)

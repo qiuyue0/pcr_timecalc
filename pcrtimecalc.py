@@ -35,9 +35,8 @@ async def feedback(bot, ev: CQEvent):
     res2=min(res2,90)
     res1=str(res1)
     res2=str(res2)
-    reply=f"刀1伤害：{d1}\n刀2伤害：{d2}\nBOSS血量：{rest}\n"
+    reply=f"刀1伤害：{d1}\t刀2伤害：{d2}\tBOSS血量：{rest}\n"
     if(d1>=rest or d2>=rest):
-        reply=reply+"注：\n"
         if(d1>=rest):
             reply=reply+"第一刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+20s\n"
         if(d2>=rest):
