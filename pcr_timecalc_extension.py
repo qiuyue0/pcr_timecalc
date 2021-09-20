@@ -37,10 +37,10 @@ async def feedback(bot, ev: CQEvent):
     time=int(content[3])
     try:
         left_time = int(content[4])
-        flag = 0
+        flag=0
     except:
-        flag = 1
         left_time = 1
+        flag = 1 if d1>rest else 0
     result = time_calc(d1,rest,time,left_time)
     reply=f"刀A伤害：{d1}    Boss血量：{rest}    所需补时：{time}秒\n"
     if flag:
