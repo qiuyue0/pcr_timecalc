@@ -39,8 +39,8 @@ async def feedback(bot, ev: CQEvent):
         return
     result = time_calc(d1,d2,rest,left_time)
     
-    reply=f"刀A伤害：{d1}\t刀B伤害：{d2}\tBOSS血量：{rest}"
-    reply+=f"击杀刀剩余时间：{left_time}\n" if d1>rest or d2>rest else "\n"
+    reply=f"刀A伤害：{d1} 刀B伤害：{d2} BOSS血量：{rest} "
+    reply+=f"击杀刀剩余时间：{left_time}秒\n" if d1>=rest or d2>=rest else "\n"
     if(d1>=rest or d2>=rest):
         if(len(content)==4):
             reply=reply+"其中一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8"
