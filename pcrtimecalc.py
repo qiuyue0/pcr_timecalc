@@ -23,7 +23,7 @@ async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()
     if(len(content)!=4 and len(content)!=5):
-        reply="请输入：合刀 刀A伤害 刀B伤害 剩余血量，如：合刀 500 600 700\n"
+        reply="请输入：合刀 刀A伤害 刀B伤害 剩余血量 [刀A剩余时间]，如：合刀 500 600 700\n"
         await bot.send(ev, reply)
         return
     try:
