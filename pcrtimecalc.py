@@ -3,17 +3,33 @@ import math
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
 
-sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀 刀1伤害 刀2伤害 剩余血量\n如：合刀 50 60 70\n')
-
-
+sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀 刀A伤害 刀B伤害 剩余血量 [刀A剩余时间]\n如：合刀 500 600 700\n')
+class time_calc():
+    def __init__(self,dmg1:float,dmg2:float,rest:float,left_time:int):
+        self.dmg_A = min(rest,dmg1)
+        self.dmg_B = min(rest,dmg2)
+        self.rest=rest
+        self.left_time=left_time
+    def _range(self,num):
+        return round(max(min(num,90.0),21.0),2)
+    def A_first(self)->str:
+        ret = self._range(110-(self.rest-self.dmg_A)/self.dmg_B*(90.95-self.left_time))
+        return str(ret)
+    def B_first(self)->str:
+        ret = self._range(110-(self.rest-self.dmg_B)/self.dmg_A*(90.95-self.left_time))
+        return str(ret)
 @sv.on_prefix('合刀')
 async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()
-    if(len(content)!=4):
-        reply="请输入：合刀 刀1伤害 刀2伤害 剩余血量\n如：合刀 50 60 70\n"
+    if(len(content)!=4 and len(content)!=5):
+        reply="请输入：合刀 刀A伤害 刀B伤害 剩余血量，如：合刀 500 600 700\n"
         await bot.send(ev, reply)
         return
+    try:
+        left_time = float(content[4])
+    except:
+        left_time = 1.0
     d1=float(content[1])
     d2=float(content[2])
     rest=float(content[3])
@@ -21,26 +37,22 @@ async def feedback(bot, ev: CQEvent):
         reply="醒醒！这两刀是打不死boss的\n"
         await bot.send(ev, reply)
         return
-    dd1=d1
-    dd2=d2
-    if d1>=rest:
-        dd1=rest
-    if d2>=rest:
-        dd2=rest        
-    res1=round(110-(rest-dd1)/dd2*90,2) # 1先出，2能得到的时间
-    res2=round(110-(rest-dd2)/dd1*90,2); # 2先出，1能得到的时间
-    res1=min(res1,90)
-    res2=min(res2,90)
-    res1=str(res1)
-    res2=str(res2)
-    reply=f"刀1伤害：{d1}\t刀2伤害：{d2}\tBOSS血量：{rest}\n"
+    result = time_calc(d1,d2,rest,left_time)
+    
+    reply=f"刀A伤害：{d1}\t刀B伤害：{d2}\tBOSS血量：{rest}\n"
     if(d1>=rest or d2>=rest):
-        if(d1>=rest):
-            reply=reply+"第一刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+20s\n"
-        if(d2>=rest):
-            reply=reply+"第二刀可直接秒杀boss，伤害按 "+str(rest)+" 计算\n将补偿剩余时间+20s\n"
-    d1=str(d1)
-    d2=str(d2)
-    reply=reply+"刀1先出，另一刀可获得 "+res1+" 秒补偿刀\n"
-    reply=reply+"刀2先出，另一刀可获得 "+res2+" 秒补偿刀\n"
+        if(len(content)==4):
+            reply=reply+"第一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8\n"
+            await bot.send(ev, reply)
+            return
+        elif(d2>=rest):
+            reply=reply+"刀A先出，另一刀可获得 "+result.A_first()+" 秒补偿刀\n"
+            await bot.send(ev, reply)
+            return
+        elif(d1>=rest):
+            reply=reply+"刀B先出，另一刀可获得 "+result.B_first()+" 秒补偿刀\n"
+            await bot.send(ev, reply)
+            return
+    reply=reply+"刀A先出，另一刀可获得 "+result.A_first()+" 秒补偿刀\n"
+    reply=reply+"刀B先出，另一刀可获得 "+result.B_first()+" 秒补偿刀\n"
     await bot.send(ev, reply)
