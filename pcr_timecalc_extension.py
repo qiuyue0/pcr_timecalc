@@ -17,12 +17,12 @@ class time_calc():
         return round(max(min(num,90.0),21.0),2)
     def A_first(self)->str:
         dmg = round(max(0,1/(110.0-self.time)*90*(self.rest-self.dmg_A)),2)
-        if dmg>self.rest:
+        if dmg>=self.rest:
             needed_time = math.ceil(90-(110-self.time)*self.rest/(self.rest-self.dmg_A))
             return "刀A先出，刀B需要"+str(needed_time)+"s前击杀才能使刀B获得"+str(math.ceil(self.time))+"秒补时\n"
         return "刀A先出，刀B需要造成"+str(dmg)+"伤害才能使刀B获得"+str(math.ceil(self.time))+"秒补时\n"
     def A_second(self)->str:
-        dmg = round(self.rest-(110-self.time)/(90.99-self.left_time)*self.dmg_A,2)
+        dmg = max(round(self.rest-(110-self.time)/(90.99-self.left_time)*self.dmg_A,2),0)
         return "刀A收尾，刀B需要造成"+str(dmg)+"伤害才能使刀A获得"+str(math.ceil(self.time))+"秒补时"
 @sv.on_prefix('补时')
 async def feedback(bot, ev: CQEvent):
@@ -48,8 +48,11 @@ async def feedback(bot, ev: CQEvent):
         await bot.send(ev, reply)
         return 
     # dmg2 = round(max(0,1/(110.0-t)*90*(rest-dmg1)),2)
-    reply+=result.A_first()
+    
     # dmg2 = round(max(0,rest-(110.0-t)/90*dmg1),2)
     reply+=result.A_second()
-    
+    if(d1>=rest):
+        await bot.send(ev, reply)
+        return
+    reply+=result.A_first()
     await bot.send(ev, reply)
