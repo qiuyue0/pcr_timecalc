@@ -29,7 +29,7 @@ async def feedback(bot, ev: CQEvent):
     try:
         left_time = float(content[4])
     except:
-        left_time = 1.0
+        left_time = 0
     d1=float(content[1])
     d2=float(content[2])
     rest=float(content[3])
@@ -43,10 +43,8 @@ async def feedback(bot, ev: CQEvent):
     reply+=f"击杀刀剩余时间：{left_time}秒\n" if d1>=rest or d2>=rest else "\n"
     if(d1>=rest or d2>=rest):
         if(len(content)==4):
-            reply=reply+"其中一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8"
-            await bot.send(ev, reply)
-            return
-        elif(d2>=rest):
+            reply=reply+"其中一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8\n当前默认剩余时间为0\n"
+        if(d2>=rest):
             reply=reply+"刀A先出，另一刀可获得 "+result.A_first()+" 秒补偿刀"
             await bot.send(ev, reply)
             return
