@@ -3,7 +3,7 @@ import math
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
 
-sv = Service('补时', manage_priv=priv.SUPERUSER, help_='请输入：补时 刀1伤害 剩余血量 所需补时 [击杀刀剩余时间]\n如：补时 500 600 44\n')
+sv = Service('补时', manage_priv=priv.SUPERUSER, help_='请输入：补时 刀1伤害 剩余血量 所需补时 [击杀刀剩余时间]\n如：补时 500 600 44')
 
 
 
@@ -29,7 +29,7 @@ async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()
     if(len(content)!=4 and len(content)!= 5):
-        reply="请输入：补时 刀A伤害 剩余血量 所需补时 [击杀刀剩余时间]\n如：补时 500 600 44\n"
+        reply="请输入：补时 刀A伤害 剩余血量 所需补时 [击杀刀剩余时间]\n如：补时 500 600 44"
         await bot.send(ev, reply)
         return
     d1=float(content[1])
