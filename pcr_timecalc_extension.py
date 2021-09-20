@@ -42,7 +42,8 @@ async def feedback(bot, ev: CQEvent):
         left_time = 1
         flag = 1 if d1>rest else 0
     result = time_calc(d1,rest,time,left_time)
-    reply=f"刀A伤害：{d1}    Boss血量：{rest}    所需补时：{time}秒\n"
+    reply=f"刀A伤害：{d1}    Boss血量：{rest}    所需补时：{time}秒"
+    reply+="\n" if flag else f"    击杀时间：{left_time}\n"
     if flag:
         reply+="刀A可以直接击杀boss，请填写击杀剩余时间\n如：补时 610 600 90 11"
         await bot.send(ev, reply)

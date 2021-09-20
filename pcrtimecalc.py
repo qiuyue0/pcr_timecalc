@@ -3,7 +3,7 @@ import math
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
 
-sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀 刀A伤害 刀B伤害 剩余血量 [刀A剩余时间]\n如：合刀 500 600 700')
+sv = Service('合刀', manage_priv=priv.SUPERUSER, help_='请输入：合刀 刀A伤害 刀B伤害 剩余血量 [击杀刀剩余时间]\n如：合刀 500 600 700')
 class time_calc():
     def __init__(self,dmg1:float,dmg2:float,rest:float,left_time:int):
         self.dmg_A = min(rest,dmg1)
@@ -22,8 +22,8 @@ class time_calc():
 async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
     content=cmd.split()
-    if(len(content)!=4 and len(content)!=5):
-        reply="请输入：合刀 刀A伤害 刀B伤害 剩余血量 [刀A剩余时间]\n如：合刀 500 600 700"
+    if(len(content) not in (4,5)):
+        reply="请输入：合刀 刀A伤害 刀B伤害 剩余血量 [击杀刀剩余时间]\n如：合刀 500 600 700"
         await bot.send(ev, reply)
         return
     try:
@@ -39,7 +39,8 @@ async def feedback(bot, ev: CQEvent):
         return
     result = time_calc(d1,d2,rest,left_time)
     
-    reply=f"刀A伤害：{d1}\t刀B伤害：{d2}\tBOSS血量：{rest}\n"
+    reply=f"刀A伤害：{d1}\t刀B伤害：{d2}\tBOSS血量：{rest}"
+    reply+=f"击杀刀剩余时间：{left_time}\n" if d1>rest or d2>rest else "\n"
     if(d1>=rest or d2>=rest):
         if(len(content)==4):
             reply=reply+"其中一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8"
