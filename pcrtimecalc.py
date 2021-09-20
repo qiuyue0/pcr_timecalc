@@ -42,7 +42,7 @@ async def feedback(bot, ev: CQEvent):
     reply=f"刀A伤害：{d1}\t刀B伤害：{d2}\tBOSS血量：{rest}\n"
     if(d1>=rest or d2>=rest):
         if(len(content)==4):
-            reply=reply+"第一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8"
+            reply=reply+"其中一刀可直接秒杀boss，请输入：合刀 刀A伤害 刀B伤害 剩余血量 击杀刀剩余时间\n如：合刀 620 450 600 8"
             await bot.send(ev, reply)
             return
         elif(d2>=rest):
