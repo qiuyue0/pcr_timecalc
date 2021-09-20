@@ -23,7 +23,7 @@ class time_calc():
         return "刀A先出，刀B需要造成"+str(dmg)+"伤害才能使刀B获得"+str(math.ceil(self.time))+"秒补时"
     def A_second(self)->str:
         dmg = max(round(self.rest-(110-self.time)/(90.95-self.left_time)*self.dmg_A,2),0)
-        return "刀A收尾，刀B需要造成"+str(dmg)+"伤害才能使刀A获得"+str(math.ceil(self.time))+"秒补时\n"
+        return "刀A收尾，刀B需要造成"+str(dmg)+"伤害才能使刀A获得"+str(math.ceil(self.time))+"秒补时"
 @sv.on_prefix('补时')
 async def feedback(bot, ev: CQEvent):
     cmd = ev.raw_message
@@ -43,8 +43,6 @@ async def feedback(bot, ev: CQEvent):
         flag = 1 if d1>=rest else 0
     result = time_calc(d1,rest,time,left_time)
     reply=f"刀A伤害：{d1} Boss血量：{rest} 所需补时：{time}秒 击杀刀剩余时间：{left_time}秒\n"
-    if flag:
-        reply+="刀A可以直接击杀boss，请填写击杀剩余时间\n如：补时 610 600 90 11\n"
     # dmg2 = round(max(0,1/(110.0-t)*90*(rest-dmg1)),2)
     
     # dmg2 = round(max(0,rest-(110.0-t)/90*dmg1),2)
@@ -52,5 +50,5 @@ async def feedback(bot, ev: CQEvent):
     if(d1>=rest):
         await bot.send(ev, reply)
         return
-    reply+=result.A_first()
+    reply+="\n"+result.A_first()
     await bot.send(ev, reply)
