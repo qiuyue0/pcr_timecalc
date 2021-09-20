@@ -19,7 +19,7 @@ class time_calc():
         dmg = round(max(0,1/(110.0-self.time)*90*(self.rest-self.dmg_A)),2)
         if dmg>self.rest:
             needed_time = math.ceil(90-(110-self.time)*self.rest/(self.rest-self.dmg_A))
-            return "刀A先出，刀B需要"+needed_time+"s前击杀才能使刀B获得"+str(math.ceil(self.time))+"秒补时\n"
+            return "刀A先出，刀B需要"+str(needed_time)+"s前击杀才能使刀B获得"+str(math.ceil(self.time))+"秒补时\n"
         return "刀A先出，刀B需要造成"+str(dmg)+"伤害才能使刀B获得"+str(math.ceil(self.time))+"秒补时\n"
     def A_second(self)->str:
         dmg = round(self.rest-(110-self.time)/(90.99-self.left_time)*self.dmg_A,2)
