@@ -13,10 +13,10 @@ class time_calc():
     def _range(self,num):
         return round(max(min(num,90.0),21.0),2)
     def A_first(self)->str:
-        ret = self._range(110-(self.rest-self.dmg_A)/self.dmg_B*(90.95-self.left_time))
+        ret = self._range(110-(self.rest-self.dmg_A)/self.dmg_B*(90-self.left_time))
         return str(ret)
     def B_first(self)->str:
-        ret = self._range(110-(self.rest-self.dmg_B)/self.dmg_A*(90.95-self.left_time))
+        ret = self._range(110-(self.rest-self.dmg_B)/self.dmg_A*(90-self.left_time))
         return str(ret)
 @sv.on_prefix('合刀')
 async def feedback(bot, ev: CQEvent):

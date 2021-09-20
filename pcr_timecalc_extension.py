@@ -22,7 +22,7 @@ class time_calc():
             return "刀A先出，刀B需要"+str(needed_time)+"s前击杀才能使刀B获得"+str(math.ceil(self.time))+"秒补时"
         return "刀A先出，刀B需要造成"+str(dmg)+"伤害才能使刀B获得"+str(math.ceil(self.time))+"秒补时"
     def A_second(self)->str:
-        dmg = max(round(self.rest-(110-self.time)/(90.99-self.left_time)*self.dmg_A,2),0)
+        dmg = max(round(self.rest-(110-self.time)/(90.95-self.left_time)*self.dmg_A,2),0)
         return "刀A收尾，刀B需要造成"+str(dmg)+"伤害才能使刀A获得"+str(math.ceil(self.time))+"秒补时\n"
 @sv.on_prefix('补时')
 async def feedback(bot, ev: CQEvent):
